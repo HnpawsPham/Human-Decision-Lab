@@ -1,0 +1,128 @@
+html{
+    overflow: hidden;
+}
+
+#play-field{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#scoreboard {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    background: rgba(20, 20, 20, 0.9);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    font-family: main;
+    font-size: 25px;
+    transition: height 0.3s ease;
+}
+
+.scoreboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.scoreboard-header:hover {
+    background: var(--gray);
+}
+
+.scoreboard-body {
+    width: 100%;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    transition: opacity 0.2s ease;
+}
+
+.scoreboard-body .participant{
+    width: 100%;
+    display: flex;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: var(--gray);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scoreboard-body .participant span:nth-child(1){
+    width: 70%;
+}
+
+.scoreboard-body .stats-btn{
+    bottom: 0px;
+    border-radius: 10px;
+    background-color: white;
+    text-align: center;
+    color: var(--dark);
+    font-size: 25px;
+    padding: 10px 0;
+    margin-top: 10px;
+}
+
+#scoreboard.collapsed .scoreboard-body {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#scoreboard.collapsed {
+    height: 48px;
+}
+
+#scoreboard:not(.collapsed) {
+    min-height: 160px;
+    max-height: 80vh;
+}
+
+.toggle {
+    transition: transform 0.3s ease;
+}
+
+#scoreboard.collapsed .toggle {
+    transform: rotate(-90deg);
+}
+
+#add-char-btn{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 30px;
+    font-family: main;
+    font-size: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: var(--dark);
+    color: var(--light-beige);
+}
+
+#add-char-btn:hover{
+    background: var(--gray);
+}
+
+#analysis{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#return-btn{
+    color: var(--dark);
+    font-size: 25px;
+    text-decoration: underline;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
