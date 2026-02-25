@@ -1,5 +1,5 @@
 import {Model} from "./models.js";
-import { addScoreTag } from "./UI.js";
+import {addScoreTag, loadModelPreview} from "./UI.js";
 
 let modelList = Model.children.map(elm => new elm());
 
@@ -14,4 +14,5 @@ for(let model of modelList)
 
 for(let model of modelList){
     addScoreTag(model);
+    loadModelPreview(model);
 }

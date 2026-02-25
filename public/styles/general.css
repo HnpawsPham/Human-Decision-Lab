@@ -15,6 +15,7 @@ html{
     --orange: #FA8112;
     --dark: #0e0e0e;
     --gray: #383838;
+    --blue: rgb(22, 96, 224);
 }
 
 @font-face {
@@ -186,4 +187,15 @@ a{
     border-radius: 10px;
     display: none;
     font-size: 20px;
+}
+
+.ongoing{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    font-family: main;
+    font-size: 200px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: underline overline;
 }
