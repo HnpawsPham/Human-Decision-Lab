@@ -78,6 +78,7 @@ body{
 }
 
 #about p{
+    text-align: justify;
     width: 85%;
     font-size: 25px;
     color: white;

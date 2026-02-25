@@ -95,13 +95,14 @@ html{
     transform: rotate(-90deg);
 }
 
-#add-char-btn{
+#add-model-btn{
+    z-index: 1;
     position: absolute;
     bottom: 20px;
     right: 20px;
     border-radius: 10px;
     border: none;
-    padding: 10px 30px;
+    padding: 15px 25px;
     font-family: main;
     font-size: 50px;
     cursor: pointer;
@@ -110,7 +111,7 @@ html{
     color: var(--light-beige);
 }
 
-#add-char-btn:hover{
+#add-model-btn:hover{
     background: var(--gray);
 }
 
@@ -129,26 +130,10 @@ html{
     right: 20px;
 }
 
-#play-field{
-    position:relative;
-    width: 100vw;
-    height: 100vh;
-}
-
-#play-field .model{
-    position: absolute;
-    cursor: pointer;
-    width: 180px;
-    height: 180px;
-}
-
-#play-field .model img{
-    width: 100%;
-    object-fit: cover;
-}
-
 #main-game{
     position: relative;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
 }
@@ -159,9 +144,6 @@ html{
     bottom: 10px;
     width: 50%;
     height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 #main-game .init-tab input{
@@ -192,4 +174,145 @@ html{
 #main-game .init-tab button:disabled, #main-game .init-tab input:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+#model-selection{
+    z-index: 1;
+    position: absolute;
+    border-radius: 10px;
+    background-color: var(--light-beige);
+    bottom: 120px;
+    right: 20px;
+    width: 60vw;
+    height: 60vh;
+    border: 1px solid var(--dark);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.2s ease;
+}
+
+#model-selection h1{
+    text-align: center;
+    font-size: 40px;
+    text-decoration: underline;
+}
+
+#model-selection .body{
+    margin-top: 20px;
+    display: grid;
+    width: 95%;
+    height: 73%;
+    overflow-y: auto;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-items: center;
+    align-items: center;
+}
+
+#model-selection .body .model-tab{
+    cursor: pointer;
+    background-color: var(--orange);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    border: 1px solid var(--dark);
+}
+
+#model-selection .body .model-tab img{
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    height: 80%;
+    object-fit: contain;
+}
+
+#model-selection .body .model-tab p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20%;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#model-selection .model-search{
+    margin: 5px 0;
+    width: 40%;
+    position: relative;
+}
+
+#model-selection .model-search svg{
+    position: absolute;
+    top: 9px;
+    right: 10px;
+}
+
+#model-selection a{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--blue);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#model-selection a:hover{
+    transform: rotate(-5deg);
+}
+
+#model-searchbar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    width: 100%;
+    padding: 5px;
+    font-family: main;
+    font-size: 15px;
+}
+
+#play-field{
+    position: absolute;
+    left: 0;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 95%;
+    transition: all 0.3s;
+}
+
+.models-circle {
+    width: 100%;
+    position: relative;
+    border-radius: 50%;
+    margin: 40px auto;
+    width: attr(data-width px);
+    height: attr(data-height px);
+}
+
+.models-circle .model {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.models-circle .model img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: pointer;
 }

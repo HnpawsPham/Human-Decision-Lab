@@ -10,8 +10,11 @@ export class Model{
         this.point = 0;
         this.moral = 100;
         this.reputation = 100;
+        this.delta = 1;
+        this.like = 50;
         this.memory = [];
         this.firstTry = 1;
+        this.img = "../assets/char.png"
     }
 
     strategy(opponent){
