@@ -1,4 +1,4 @@
-import {sendNoti} from "../notification.js";
+import {sendNoti, stringShortener} from "../support-funcs.js";
 import { changeGameSpeed, getModelList, runGame } from "./manager.js";
 
 //#region scoreboard handle
@@ -14,6 +14,8 @@ header.onclick = () => {
 const scoreboardDisplay = document.querySelector(".participant-container");
 const scoreMap = new Map();
 const selectedModels = [];
+
+const strLim = 26;
 
 function cloneModel(type){
     let cnt = 0;
@@ -31,7 +33,7 @@ function addScoreboardTag(model){
     tag.classList.add("participant");
     
     let name = document.createElement("span");
-    name.innerHTML = model.name;
+    name.innerHTML = stringShortener(model.name, strLim);
     tag.appendChild(name);
 
     let modelPts = document.createElement("span");
@@ -94,8 +96,12 @@ function loadModelPreview(model){
     img.src = model.img;
     div.appendChild(img);
 
+    let description = document.createElement("span");
+    description.innerHTML = model.description;
+    div.appendChild(description);
+
     let name = document.createElement("p");
-    name.innerHTML = model.name;
+    name.innerHTML = stringShortener(model.name, strLim);
     div.appendChild(name);
 
     div.onclick = () => {addModelToPlayField(model)};

@@ -13,9 +13,9 @@ function sleep(ms) {
 let gameSpeed = 300;
 export function changeGameSpeed(value){
     gameSpeed = value;
-    console.log(gameSpeed);
 }
 
+// MAIN GAME HANDLE
 export async function runGame(models, onMatch) {
     for (let model of models) {
         for (let opponent of models) {
