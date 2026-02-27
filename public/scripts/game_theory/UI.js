@@ -1,5 +1,5 @@
 import {sendNoti} from "../notification.js";
-import { changeGameSpeed, getModelList, runGame, game } from "./manager.js";
+import { changeGameSpeed, getModelList, runGame } from "./manager.js";
 
 //#region scoreboard handle
 // scoreboard animation
