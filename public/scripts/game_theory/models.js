@@ -23,6 +23,10 @@ export class Model {
     strategy(opponent) {
         throw new Error("strategy() is empty");
     }
+
+    this_move(opponent){
+        return this.tmp = this.strategy(opponent);
+    }
     
     update(){
         this.move = this.tmp;
@@ -36,7 +40,7 @@ class TitForTat extends Model {
     }
 
     strategy(opponent) {
-        return this.move = opponent;
+        return opponent;
     }
 }
 Model.register(TitForTat);
