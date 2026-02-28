@@ -14,13 +14,18 @@ export class Model {
         this.reputation = 100;
         this.delta = 1;
         this.like = 50;
-        this.memory = [];
-        this.return = 1;
-        this.img = "../assets/char.png"
+        this.memory = new Map();
+        this.move = 1;
+        this.tmp = 1;
+        this.img = "../assets/model_imgs/" + name.toLowerCase().replaceAll(' ', '-') + ".png";
     }
 
     strategy(opponent) {
         throw new Error("strategy() is empty");
+    }
+    
+    update(){
+        this.move = this.tmp;
     }
 }
 
@@ -31,8 +36,7 @@ class TitForTat extends Model {
     }
 
     strategy(opponent) {
-        this.return = opponent;
-        return this.return;
+        return this.move = opponent;
     }
 }
 Model.register(TitForTat);
@@ -44,7 +48,7 @@ class CinnamonRoll extends Model {
     }
 
     strategy(opponent) {
-        return this.return;;
+        return 1;
     }
 }
 Model.register(CinnamonRoll);
@@ -52,12 +56,13 @@ Model.register(CinnamonRoll);
 class Badass extends Model {
     constructor() {
         super("Badass");
-        this.return = 0;
+        this.move = 0;
+        this.tmp = 0;
         this.description = "Always chooses to betray, no matter what the opponent does. Ruthless and predictable, but effective against overly trusting strategies.";
     }
 
     strategy(opponent) {
-        return this.return;
+        return 0;
     }
 }
 Model.register(Badass);
@@ -73,8 +78,7 @@ class Jugador extends Model {
         if (!opponent) this.delta--;
         else this.delta++;
 
-        this.return = (this.delta >= 0);
-        return this.return;
+        return (this.delta >= 0);
     }
 }
 Model.register(Jugador);
@@ -87,14 +91,13 @@ class TitFor2Tats extends Model {
     }
 
     strategy(opponent) {
-        if (!opponent) this.betray_cnt++;
-        if (this.betray_cnt >= 2)
-            this.return = 0;
-        else {
-            this.return = 1;
+        if(!opponent) this.betray_cnt++;
+        if(this.betray_cnt >= 2)
+            return 0;
+        else{
             this.betray_cnt = 0;
+            return 1;
         }
-        return this.return;
     }
 }
 Model.register(TitFor2Tats);
@@ -108,9 +111,7 @@ class GenerousTitForTat extends Model {
 
     strategy(opponent) {
         const tolerate = Math.random() < (0.1 + Math.random() * 0.2) ? 1 : 0;
-        this.return = opponent;
-        this.return |= tolerate;
-        return this.return;
+        return (opponent | tolerate);
     }
 }
 Model.register(GenerousTitForTat);
@@ -124,10 +125,7 @@ class GrimTrigger extends Model{
 
     strategy(opponent){
         this.is_betrayed |= !opponent;
-
-        if(this.is_betrayed) 
-            this.return = 0;
-        return this.return;
+        return (!this.is_betrayed);
     }
 }
 Model.register(GrimTrigger);

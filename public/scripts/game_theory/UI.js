@@ -23,7 +23,7 @@ function cloneModel(type){
     for(const model of selectedModels)
         if(model.type === type.type) cnt++;
     
-    const clone = Object.create(type);
+    const clone = new type.constructor();
     if(cnt != 0) clone.name = `${clone.name} (${cnt})`; 
     return clone;
 }

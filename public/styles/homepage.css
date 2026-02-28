@@ -2,6 +2,26 @@ body{
     background-color: var(--dark);
 }
 
+#user-account{
+    cursor: pointer;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#user-account img{
+    width: 30px;
+    border: 1px solid white;
+    border-radius: 100px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+#user-account p{
+    color: white;
+}
+
 .topic-btn{
     color: white;
     font-size: 50px;
@@ -34,57 +54,193 @@ body{
 }
 
 .heading{
-    margin-top: 20vh;
     text-align: center;
     font-size: 120px;
     color: white;
 }
 
 #btn-container{
-    width: 100vw;
+    width: 100%;
     display: flex;
     margin-top: 50px;
     justify-content: space-evenly;
 }
 
-#demo{
+.block{
+    margin-top: 20vh;
     width: 100vw;
-    height: 70vh;
+    height: 100vh;
+}
+
+#demo{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
 #demo .heading{
-    margin-bottom: 20px;
+    margin-top: 10vh;
+    margin-bottom: 40px;
+    height: 20%;
 }
 
-#demo .img-container{
+#demo .slideshow{
     width: 100%;
-    height: 70%;
-    display: flex;
-    align-items: center;
-    overflow-x: auto;
+    height: 30%;
 }
 
-#demo .img-container img{
-    margin: 0 20px;
-    width: 350px;
+.slideshow .list{
+    display: flex;
+    position: relative;
+    width: 100%;
     height: 100%;
+    min-width: calc(var(--width) * var(--quantity) - 200px);
+}
+
+.slideshow .list .item{
+    cursor: pointer;
+    position: absolute;
+    width: var(--width);
+    height: var(--height);
+    left: 100%;
+    animation: autorun 10s linear infinite;
+    animation-delay: calc((10s / var(--quantity)) * (var(--pos) - 1));
+    transition: all 0.3s;
+}
+
+#demo .slideshow .list img{
     object-fit: cover;
 }
 
-#about{
+#user-review{
+    margin-top: 50px;
+    width: 90%;
+    max-width: calc((var(--width) + 20px) * var(--quantity));
+    height: 38%;
+    display: flex;  
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#user-review .review{
+    width: var(--width);
+    height: 100px;
+    background-color: var(--light-beige);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#user-review .review img{
+    width: 70px;
+    aspect-ratio: 1 / 1;
+    border-radius: 100px;
+}
+
+#user-review .review .info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+}
+
+.review .info .name{
+    font-size: 30px ;
+}
+
+.review .info .content{
+    text-align: left;
+}
+
+.slideshow:hover .item{
+    animation-play-state: paused !important;
+    filter: grayscale(1);
+}
+
+.slideshow .item:hover{
+    filter: grayscale(0);
+}
+
+@keyframes autorun {
+    from{
+        left: 100%;
+    }
+    to{
+        left: calc(var(--width) * -1);
+    }
+}
+
+.text-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#about p{
+.text-container p, #resources div{
     text-align: justify;
     width: 85%;
     font-size: 25px;
     color: white;
+}
+
+#resources{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#resources p{
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 16px;
+    color: #aaa;
+    letter-spacing: 2px;
+}
+
+#resources p::before,
+#resources p::after{
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(170, 170, 170, 0.6)
+    );
+}
+
+#resources p::after{
+    background: linear-gradient(
+        to left,
+        transparent,
+        rgba(170, 170, 170, 0.6)
+    );
+}
+
+
+#resources div{
+    position: relative;
+    height: 40%;
+}
+
+#resources div ul {
+    position: absolute;
+    left: 0;
+    width: 60%;
+    list-style-type: "- ";
+}
+
+#resources div img{
+    position: absolute;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border: 1px solid var(--light-beige);
 }

@@ -15,20 +15,34 @@ export function changeGameSpeed(value){
     gameSpeed = value;
 }
 
+function remember(model, opponent){
+    model.memory.set(opponent.name, {
+        name: opponent.name,
+        behavior: opponent.move
+    });
+}
+
 // MAIN GAME HANDLE
 export async function runGame(models, onMatch) {
     for (let model of models) {
         for (let opponent of models) {
+            console.log(opponent.name);
             if (model.name == opponent.name) continue;
 
-            let opponentMove = opponent.strategy(model.return);
+            let opponentMove = opponent.strategy(model.move);
+            let modelMove = model.strategy(opponent.move);
 
-            if(opponentMove < model.return)
+            if(opponentMove < modelMove)
                 model.point -= 3;
-            else if(opponentMove > model.return)
+            else if(opponentMove > modelMove)
                 model.point += 3;
-            else if(opponentMove + model.return > 0) 
+            else if(opponentMove + modelMove > 0) 
                 model.point++;
+
+            remember(model, opponent);
+
+            model.update();
+            opponent.update();
 
             onMatch(model, opponent);
             await sleep(gameSpeed);
