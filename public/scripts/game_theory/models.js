@@ -15,8 +15,9 @@ export class Model {
         this.delta = 1;
         this.like = 50;
         this.memory = new Map();
-        this.move = 1;
-        this.tmp = 1;
+        this.move = new Map();
+        this.tmp = new Map();
+        this.firstMove = 1;
         this.img = "../assets/model_imgs/" + name.toLowerCase().replaceAll(' ', '-') + ".png";
     }
 
@@ -25,11 +26,15 @@ export class Model {
     }
 
     this_move(opponent){
-        return this.tmp = this.strategy(opponent);
+        if(this.firstMove != -1)
+            this.tmp.set(opponent.name, this.firstMove);
+        else this.tmp.set(opponent.name) = this.strategy(opponent);
+
+        return this.tmp.get(opponent.name);
     }
     
-    update(){
-        this.move = this.tmp;
+    update(opponent){
+        this.move.set(opponent.name, this.tmp.get(opponent.name));
     }
 }
 
@@ -60,8 +65,7 @@ Model.register(CinnamonRoll);
 class Badass extends Model {
     constructor() {
         super("Badass");
-        this.move = 0;
-        this.tmp = 0;
+        this.firstMove = 0;
         this.description = "Always chooses to betray, no matter what the opponent does. Ruthless and predictable, but effective against overly trusting strategies.";
     }
 
@@ -74,15 +78,20 @@ Model.register(Badass);
 class Jugador extends Model {
     constructor() {
         super("The Jugador");
-        this.delta = 0;
+        this.delta = new Map();
         this.description = "Keeps track of how fair the opponent has been over time. Cooperation increases trust, betrayal reduces it. If the overall balance stays positive, Jugador cooperates — otherwise, it defects.";
     }
 
     strategy(opponent) {
-        if (!opponent) this.delta--;
-        else this.delta++;
+        if(!this.delta.has(opponent.name))
+            this.delta.set(opponent.name, 0);
 
-        return (this.delta >= 0);
+        if(opponent.lastMove === 1)
+            this.delta.set(opponent.name, this.delta.get(opponent.name) + 1);
+        else
+            this.delta.set(opponent.name, this.delta.get(opponent.name) - 1);
+
+        return this.delta.get(opponent.name) >= 0 ? 1 : 0;
     }
 }
 Model.register(Jugador);
@@ -90,46 +99,49 @@ Model.register(Jugador);
 class TitFor2Tats extends Model {
     constructor() {
         super("Tit For Two Tats");
-        this.betray_cnt = 0;
+        this.betrayedCnt = new Map();
         this.description = "Cooperates by default and only defects if the opponent betrays twice in a row. This makes it more forgiving than Tit for Tat and better at handling occasional mistakes.";
     }
 
     strategy(opponent) {
-        if(!opponent) this.betray_cnt++;
-        if(this.betray_cnt >= 2)
+        if(!this.betrayedCnt.has(opponent.name))
+            this.betrayedCnt.set(opponent.name, 0);
+
+        if(opponent.lastMove === 0)
+            this.betrayedCnt.set(opponent.name, this.betrayedCnt.get(opponent.name) + 1);
+        else
+            this.betrayedCnt.set(opponent.name, 0);
+
+        if(this.betrayedCnt.get(opponent.name) >= 2)
             return 0;
-        else{
-            this.betray_cnt = 0;
-            return 1;
-        }
+        return 1;
     }
 }
 Model.register(TitFor2Tats);
 
-class GenerousTitForTat extends Model {
+// class GenerousTitForTat extends Model {
+//     constructor() {
+//         super("Generous Tit For Tat");
+//         this.tolerate = 0;
+//         this.description = "Plays like Tit for Tat — it copies the opponent’s last move — but once in a while (about 10–30%), it chooses to cooperate even after being betrayed. This bit of forgiveness helps break endless retaliation and keeps cooperation going."
+//     }
+
+//     strategy(opponent) {
+//         const tolerate = Math.random() < (0.1 + Math.random() * 0.2) ? 1 : 0;
+//         return (opponent | tolerate);
+//     }
+// }
+// Model.register(GenerousTitForTat);
+
+class GrimTrigger extends Model {
     constructor() {
-        super("Generous Tit For Tat");
-        this.tolerate = 0;
-        this.description = "Plays like Tit for Tat — it copies the opponent’s last move — but once in a while (about 10–30%), it chooses to cooperate even after being betrayed. This bit of forgiveness helps break endless retaliation and keeps cooperation going."
+        super("Grim Trigger");
+        this.betrayedBy = new Set();
     }
 
     strategy(opponent) {
-        const tolerate = Math.random() < (0.1 + Math.random() * 0.2) ? 1 : 0;
-        return (opponent | tolerate);
-    }
-}
-Model.register(GenerousTitForTat);
-
-class GrimTrigger extends Model{
-    constructor() {
-        super("Grim Trigger");
-        this.is_betrayed = 0;
-        this.description = "Starts by cooperating, but if the opponent betrays even once, it will defect forever. One mistake is enough to end cooperation permanently.";
-    }
-
-    strategy(opponent){
-        this.is_betrayed |= !opponent;
-        return (!this.is_betrayed);
+        if (opponent == 0) this.betrayedBy.add(opponent);
+        return !this.betrayedBy.has(opponent);
     }
 }
 Model.register(GrimTrigger);
