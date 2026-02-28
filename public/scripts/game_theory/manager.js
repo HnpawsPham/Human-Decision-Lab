@@ -16,6 +16,7 @@ export function changeGameSpeed(value){
     gameSpeed = value;
 }
 
+// RUN GAME SUPPORT FUNCS
 function remember(model, opponent){
     model.memory.set(opponent.name, {
         name: opponent.name,
@@ -27,10 +28,10 @@ function remember(model, opponent){
 export async function runGame(models, onMatch) {
     for (let model of models) {
         for (let opponent of models) {
-            if (model === opponent) continue;
+            if(model === opponent) continue;
 
-            let opponentMove = opponent.this_move(model.move);
             let modelMove = model.this_move(opponent.move);
+            let opponentMove = opponent.strategy(model.move);
 
             if(opponentMove < modelMove){
                 model.point -= 3;
@@ -45,11 +46,8 @@ export async function runGame(models, onMatch) {
                 pointFloatEffect(model.name, 1);
             }
 
-            model.update();
-            opponent.update();
-
+            model.update(opponent);
             remember(model, opponent);
-            remember(opponent, model);
             
             onMatch(model, opponent);
             await sleep(gameSpeed);
