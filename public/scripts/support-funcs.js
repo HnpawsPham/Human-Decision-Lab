@@ -10,9 +10,9 @@ const noti = document.getElementById("noti");
 export function sendNoti(text, ms){
     if(noti == null) return;
     noti.innerHTML = text;
-    noti.style.display = "flex";
+    noti.style.opacity = 1;
     
     setTimeout(() => {
-        noti.style.display = "none";
+        noti.style.opacity = 0;
     }, ms);
 }

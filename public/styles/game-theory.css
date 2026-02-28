@@ -341,6 +341,11 @@ html{
     height: 100%;
     object-fit: contain;
     cursor: pointer;
+    transition: all 0.3s;
+}
+
+.model.damage img {
+    filter: url(#damage-red);
 }
 
 #connect-lines {
@@ -447,7 +452,48 @@ html{
     filter: saturate(220%);
 }
 
-#main-game .bottom .init-tab button:disabled, #main-game .init-tab input:disabled {
+#main-game .bottom .init-tab button:disabled, #main-game .init-tab input:disabled, #add-model-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.score-up {
+    position: absolute;
+    font-size: 30px;
+    font-family: consolas;
+    color: var(--yellow);
+    text-shadow: 2px 2px 2px var(--dark);
+    filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.648));
+    pointer-events: none;
+    animation: floatUp 0.8s;
+}
+
+.score-down{
+    position: absolute;
+    margin-top: 100px;
+    bottom: -10px;
+    font-size: 30px;
+    font-family: consolas;
+    color: rgb(255, 4, 4);
+    text-shadow: 2px 2px 2px var(--dark);
+    filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.648));
+    pointer-events: none;
+    animation: floatUp 0.8s reverse;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -40px);
+    }
 }

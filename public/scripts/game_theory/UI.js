@@ -208,6 +208,7 @@ startGameBtn.addEventListener("click", async () => {
 
     randomRoundBtn.disabled = true;
     startGameBtn.disabled = true;
+    addModelBtn.disabled = true;
     roundInput.disabled = true;
     
     round = roundInput.value;
@@ -223,6 +224,39 @@ startGameBtn.addEventListener("click", async () => {
 //#endregion
 
 // region LOAD GAME HANDLE
+
+// increase point effect
+export function pointFloatEffect(modelName, value) {
+    const model = document.querySelector(`.model[data-name="${modelName}"]`);
+    if(!model) return;
+
+    const rect = model.getBoundingClientRect();
+    const div = document.createElement("div");
+
+    if(value > 0){
+        div.className = "score-up";
+        div.textContent = `+${value}`;
+    }
+    else{
+        model.classList.remove("damage");
+        void model.offsetWidth;
+        model.classList.add("damage");
+
+        setTimeout(() => {
+            model.classList.remove("damage");
+        }, 120);
+    }
+
+    div.style.left = rect.left + rect.width / 2 + "px";
+    div.style.top = rect.top + "px";
+
+    document.body.appendChild(div);
+
+    setTimeout(() => {
+        div.remove();
+    }, 800);
+}
+
 // line between 2 models
 const modelConnections = document.getElementById("connect-lines");
 
@@ -252,7 +286,7 @@ function drawConnection(self, opponent) {
     line.setAttribute("x2", x2 - svgRect.left);
     line.setAttribute("y2", y2 - svgRect.top);
 
-    line.setAttribute("stroke", "var(--blue)");
+    line.setAttribute("stroke", "var(--orange)");
     line.setAttribute("stroke-width", "3");
     line.style.transition = "stroke 0.3s";
 
@@ -278,8 +312,16 @@ resetBtn.addEventListener("click", () => {
     randomRoundBtn.disabled = false;
     startGameBtn.disabled = false;
     roundInput.disabled = false;
+    addModelBtn.disabled = false;
     roundInput.value = null;
 
     scoreboardDisplay.replaceChildren();
+})
+//#endregion
+
+//#region search model handle
+const modelSearchBar = document.getElementById("model-searchbar");
+modelSearchBar.addEventListener("change", () => {
+    console.log(modelSearchBar.value);
 })
 //#endregion

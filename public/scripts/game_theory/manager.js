@@ -1,4 +1,5 @@
 import {Model} from "./models.js";
+import { pointFloatEffect } from "./UI.js";
 
 let modelList = Model.children.map(elm => new elm());
 
@@ -26,24 +27,30 @@ function remember(model, opponent){
 export async function runGame(models, onMatch) {
     for (let model of models) {
         for (let opponent of models) {
-            console.log(opponent.name);
-            if (model.name == opponent.name) continue;
+            if (model === opponent) continue;
 
-            let opponentMove = opponent.strategy(model.move);
-            let modelMove = model.strategy(opponent.move);
+            let opponentMove = opponent.this_move(model.move);
+            let modelMove = model.this_move(opponent.move);
 
-            if(opponentMove < modelMove)
+            if(opponentMove < modelMove){
                 model.point -= 3;
-            else if(opponentMove > modelMove)
+                pointFloatEffect(model.name, -3);
+            }
+            else if(opponentMove > modelMove){
                 model.point += 3;
-            else if(opponentMove + modelMove > 0) 
+                pointFloatEffect(model.name, 3);
+            }
+            else if(opponentMove + modelMove > 0){ 
                 model.point++;
-
-            remember(model, opponent);
+                pointFloatEffect(model.name, 1);
+            }
 
             model.update();
             opponent.update();
 
+            remember(model, opponent);
+            remember(opponent, model);
+            
             onMatch(model, opponent);
             await sleep(gameSpeed);
         }
