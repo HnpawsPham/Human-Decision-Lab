@@ -13,26 +13,35 @@
 
 <body>
     <ul id="nav">
-        <li><a href="#home">HOME</a></li>
+        <li><a href="#topics">HOME</a></li>
         <div class="center">
             <li><a href="#about">ABOUT</a></li>
             <li><a href="#demo">DEMO</a></li>
             <li><a href="#resources">RESOURCES</a></li>
         </div>
-        <li><a href="#footer">FOOTER</a></li>
+        <li style="width: 8%;">
+            <div id="user-account">
+                <p>Hnpaws</p>
+                <img src="./assets/topic_imgs/personal.jpg" alt="">
+            </div>
+        </li>
     </ul>
 
-    <div id="home">
+    <div id="topics" class="block">
         <h1 class="heading">Experience Path</h1>
         <div id="btn-container">
             <a href="./pages/personal-state.html" class="topic-btn">Personal State</a>
             <a href="./pages/game-theory.html" class="topic-btn">Game Theory</a>
         </div>
-    </div><br><br>
+    </div>
 
-    <div id="about">
+    <p class="quote">Random quote that i have no idea yet.</p>
+
+
+    <div id="about" class="text-container block">
         <h1 class="heading">About</h1>
-        <p>&ensp;&ensp;&ensp;&ensp;&ensp;Real-life decisions are rarely a simple calculation; they are often clouded by uncertainty, shifting
+        <p>&ensp;&ensp;&ensp;&ensp;&ensp;Real-life decisions are rarely a simple calculation; they are often clouded by
+            uncertainty, shifting
             environments, and human emotion. While traditional models assume we are perfectly rational, the reality is
             far more complex.
             Our interactive platform bridges this gap, offering a sandbox for human decision-making. Inspired by John
@@ -45,23 +54,78 @@
         <p>Master the art of the long game and turn uncertainty into a strategic advantage.</p>
     </div>
 
-    <div id="demo">
+    <p class="quote">What we choose today shapes tomorrow.</p>
+
+    <div id="demo" class="block">
         <h1 class="heading">Demo</h1>
 
-        <div class="img-container">
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
+        <div class="slideshow" style="
+            --width: 400px; 
+            --height: 100%;
+            --quantity: 6;"">
+
+            <div class="list">
+                <img class="item" style="--pos: 1" src="./assets/demo_imgs/1.jpg" alt="">
+                <img class="item" style="--pos: 2" src="./assets/demo_imgs/1.jpg" alt="">
+                <img class="item" style="--pos: 3" src="./assets/demo_imgs/1.jpg" alt="">
+                <img class="item" style="--pos: 4" src="./assets/demo_imgs/1.jpg" alt="">
+                <img class="item" style="--pos: 5" src="./assets/demo_imgs/1.jpg" alt="">
+                <img class="item" style="--pos: 6" src="./assets/demo_imgs/1.jpg" alt="">
+            </div>
+        </div>
+
+        <div id="user-review" style="--width: 300px; --quantity: 4;">
+            <div class="review">
+                <img src="./assets/topic_imgs/personal-state.jpg" alt="">
+                <div class="info">
+                    <p class="name">Hnpaws</p>
+                    <p class="content">Tuyet voi ong mat troi</p>
+                </div>
+            </div>
+            <div class="review">
+                <img src="./assets/topic_imgs/personal-state.jpg" alt="">
+                <div class="info">
+                    <p class="name">Autism</p>
+                    <p class="content">Tuyet voi ong mat troi</p>
+                </div>
+            </div>
+            <div class="review">
+                <img src="./assets/topic_imgs/personal-state.jpg" alt="">
+                <div class="info">
+                    <p class="name">Autism</p>
+                    <p class="content">Tuyet voi ong mat troi</p>
+                </div>
+            </div>
+            <div class="review">
+                <img src="./assets/topic_imgs/personal-state.jpg" alt="">
+                <div class="info">
+                    <p class="name">Autism</p>
+                    <p class="content">Tuyet voi ong mat troi</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="resources">
-        <h1 class="heading">Resources</h1>
-    </div>
+    <p class="quote">Random quote that i have no idea yet.</p>
 
-    <div id="footer">
+    <div id="resources" class="text-container block">
+        <h1 class="heading">Resources</h1><br>
+        <div>
+            <ul>
+                <li>Nash, J. (1950). Equilibrium points in n-person games.</li>
+                <li>Kahneman, D. & Tversky, A. (1979). Prospect Theory.</li>
+                <li>Sutton, R. & Barto, A. (2018). Reinforcement Learning: An Introduction.</li>
+                <li>Axelrod, R. (1984). The Evolution of Cooperation.</li>
+                <li>Epstein & Axtell (1996). Growing Artificial Societies.</li>
+            </ul>
 
+            <img style="width: 190px; right: 10px; top: -50px;" src="./assets/resources_imgs/kahnman.jpg" alt="">
+            <img style="width: 100px; right: -20px;" src="./assets/resources_imgs/axelrod.jpg" alt="">
+            <img style="width: 150px; right: 190px; top: -10px;" src="./assets/resources_imgs/sutton.jpg" alt="">
+            <img style="width: 120px; right: 140px; top: 50px;" src="./assets/resources_imgs/nash.png" alt="">
+            <img style="width: 80px; right: 300px; top: 90px; border: none;" src="./assets/resources_imgs/gg-ai-studio.png" alt="">
+        </div>
+        <p>The end.</p>
     </div>
 
     <script src="./scripts/homepage-loader.js"></script>

@@ -16,6 +16,7 @@ html{
     --dark: #0e0e0e;
     --gray: #383838;
     --blue: rgb(22, 96, 224);
+    --italic-deg: 20deg;
 }
 
 @font-face {
@@ -198,4 +199,27 @@ a{
     justify-content: center;
     align-items: center;
     text-decoration: underline overline;
+}
+
+.left-italic{
+    -moz-transform: scale(1) rotate(0deg) translate(0px, 0px) skew(var(--italic-deg), 0deg);
+    -webkit-transform: scale(1) rotate(0deg) translate(0px, 0px) skew(var(--italic-deg), 0deg);
+    -o-transform: scale(1) rotate(0deg) translate(0px, 0px) skew(var(--italic-deg), 0deg);
+    -ms-transform: scale(1) rotate(0deg) translate(0px, 0px) skew(var(--italic-deg), 0deg);
+    transform: scale(1) rotate(0deg) translate(0px, 0px) skew(var(--italic-deg), 0deg);
+}
+
+.quote{
+    font-style: italic;
+    opacity: 0.7;
+    color: white;
+    font-size: 50px;
+    text-align: center;
+}
+
+.quote::before{
+    content: '"';
+} 
+.quote::after{
+    content: '"';
 }
