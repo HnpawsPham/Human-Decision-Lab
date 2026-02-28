@@ -26,9 +26,10 @@ export class Model {
     }
 
     this_move(opponent){
-        if(this.firstMove != -1)
+        if(!this.tmp.has(opponent.name))
             this.tmp.set(opponent.name, this.firstMove);
-        else this.tmp.set(opponent.name) = this.strategy(opponent);
+        
+        else this.tmp.set(opponent.name, this.strategy(opponent));
 
         return this.tmp.get(opponent.name);
     }
@@ -45,7 +46,7 @@ class TitForTat extends Model {
     }
 
     strategy(opponent) {
-        return opponent;
+        return opponent.move;
     }
 }
 Model.register(TitForTat);
@@ -86,7 +87,7 @@ class Jugador extends Model {
         if(!this.delta.has(opponent.name))
             this.delta.set(opponent.name, 0);
 
-        if(opponent.lastMove === 1)
+        if(opponent.move === 1)
             this.delta.set(opponent.name, this.delta.get(opponent.name) + 1);
         else
             this.delta.set(opponent.name, this.delta.get(opponent.name) - 1);
@@ -107,7 +108,7 @@ class TitFor2Tats extends Model {
         if(!this.betrayedCnt.has(opponent.name))
             this.betrayedCnt.set(opponent.name, 0);
 
-        if(opponent.lastMove === 0)
+        if(opponent.move == 0)
             this.betrayedCnt.set(opponent.name, this.betrayedCnt.get(opponent.name) + 1);
         else
             this.betrayedCnt.set(opponent.name, 0);
@@ -140,8 +141,8 @@ class GrimTrigger extends Model {
     }
 
     strategy(opponent) {
-        if (opponent == 0) this.betrayedBy.add(opponent);
-        return !this.betrayedBy.has(opponent);
+        if (opponent.move == 0) this.betrayedBy.add(opponent.name);
+        return !this.betrayedBy.has(opponent.name);
     }
 }
 Model.register(GrimTrigger);

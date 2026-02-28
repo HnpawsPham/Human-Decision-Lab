@@ -30,20 +30,20 @@ export async function runGame(models, onMatch) {
         for (let opponent of models) {
             if(model === opponent) continue;
 
-            let modelMove = model.this_move(opponent.move);
-            let opponentMove = opponent.strategy(model.move);
+            let modelMove = model.this_move(opponent);
+            let opponentMove = opponent.strategy(model);
 
-            if(opponentMove < modelMove){
-                model.point -= 3;
-                pointFloatEffect(model.name, -3);
+            if (modelMove == 1 && opponentMove == 1) {
+                model.point += 2;
+                pointFloatEffect(model.name, 2);
             }
-            else if(opponentMove > modelMove){
+            else if (modelMove == 0 && opponentMove == 1) {
                 model.point += 3;
                 pointFloatEffect(model.name, 3);
             }
-            else if(opponentMove + modelMove > 0){ 
-                model.point++;
-                pointFloatEffect(model.name, 1);
+            else if (modelMove == 1 && opponentMove == 0) {
+                model.point -= 3;
+                pointFloatEffect(model.name, -3);
             }
 
             model.update(opponent);
