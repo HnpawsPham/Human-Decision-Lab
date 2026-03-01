@@ -15,27 +15,31 @@ export class Model {
         this.delta = 1;
         this.like = 50;
         this.memory = new Map();
-        this.move = new Map();
-        this.tmp = new Map();
-        this.firstMove = 1;
+        this.self_move = new Map(); // store model last move to each opponent
+        this.cache = new Map(); // store model last move cache to update later
+        this.firstMove = 1; // model first move
         this.img = "../assets/model_imgs/" + name.toLowerCase().replaceAll(' ', '-') + ".png";
     }
 
-    strategy(opponent) {
+    strategy(opponent){
         throw new Error("strategy() is empty");
     }
 
     this_move(opponent){
-        if(!this.tmp.has(opponent.name))
-            this.tmp.set(opponent.name, this.firstMove);
-        
-        else this.tmp.set(opponent.name, this.strategy(opponent));
+        let res;
 
-        return this.tmp.get(opponent.name);
+        if(!opponent.self_move.has(this.name))
+            res = this.firstMove;
+        else res = this.strategy(opponent);
+
+        this.cache.set(opponent.name, res);
+        return res;
     }
-    
-    update(opponent){
-        this.move.set(opponent.name, this.tmp.get(opponent.name));
+
+    update(){
+        for(let [name, move] of this.cache)
+            this.self_move.set(name, move);
+        this.cache.clear();
     }
 }
 
@@ -46,7 +50,7 @@ class TitForTat extends Model {
     }
 
     strategy(opponent) {
-        return opponent.move;
+        return opponent.self_move.get(this.name);
     }
 }
 Model.register(TitForTat);
@@ -87,7 +91,7 @@ class Jugador extends Model {
         if(!this.delta.has(opponent.name))
             this.delta.set(opponent.name, 0);
 
-        if(opponent.move === 1)
+        if(opponent.self_move.get(this.name) == 1)
             this.delta.set(opponent.name, this.delta.get(opponent.name) + 1);
         else
             this.delta.set(opponent.name, this.delta.get(opponent.name) - 1);
@@ -108,7 +112,7 @@ class TitFor2Tats extends Model {
         if(!this.betrayedCnt.has(opponent.name))
             this.betrayedCnt.set(opponent.name, 0);
 
-        if(opponent.move == 0)
+        if(opponent.self_move.get(this.name) == 0)
             this.betrayedCnt.set(opponent.name, this.betrayedCnt.get(opponent.name) + 1);
         else
             this.betrayedCnt.set(opponent.name, 0);
@@ -120,28 +124,32 @@ class TitFor2Tats extends Model {
 }
 Model.register(TitFor2Tats);
 
-// class GenerousTitForTat extends Model {
-//     constructor() {
-//         super("Generous Tit For Tat");
-//         this.tolerate = 0;
-//         this.description = "Plays like Tit for Tat — it copies the opponent’s last move — but once in a while (about 10–30%), it chooses to cooperate even after being betrayed. This bit of forgiveness helps break endless retaliation and keeps cooperation going."
-//     }
+class GenerousTitForTat extends Model {
+    constructor() {
+        super("Generous Tit For Tat");
+        this.description = "Plays like Tit for Tat — it copies the opponent’s last move — but once in a while (about 10–30%), it chooses to cooperate even after being betrayed. This bit of forgiveness helps break endless retaliation and keeps cooperation going."
+    }
 
-//     strategy(opponent) {
-//         const tolerate = Math.random() < (0.1 + Math.random() * 0.2) ? 1 : 0;
-//         return (opponent | tolerate);
-//     }
-// }
-// Model.register(GenerousTitForTat);
+    strategy(opponent) {
+        if(opponent.self_move.get(this.name) == 0) {
+            if (Math.random() < 0.2) return 1;
+            return 0;
+        }
+        return 1;
+    }
+}
+Model.register(GenerousTitForTat);
 
 class GrimTrigger extends Model {
     constructor() {
         super("Grim Trigger");
+        this.description = "Starts by cooperating, but if the opponent betrays even once, it will defect forever. One mistake is enough to end cooperation permanently.";
         this.betrayedBy = new Set();
     }
 
     strategy(opponent) {
-        if (opponent.move == 0) this.betrayedBy.add(opponent.name);
+        if (opponent.self_move.get(this.name) == 0) 
+                this.betrayedBy.add(opponent.name);
         return !this.betrayedBy.has(opponent.name);
     }
 }

@@ -5,6 +5,7 @@
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html{
@@ -45,7 +46,7 @@ a{
     position: sticky;
     top: 0;
     height: 8vh;
-    width: 98.7vw;
+    width: calc(100vw - 20px);
     margin: 1px auto;
     display: flex;
     align-items: center;
@@ -207,7 +208,7 @@ a{
     width: 100vw;
     height: 100vh;
     font-family: main;
-    font-size: 200px;
+    font-size: 20vw;
     justify-content: center;
     align-items: center;
     text-decoration: underline overline;
@@ -234,4 +235,23 @@ a{
 } 
 .quote::after{
     content: '"';
+}
+
+/* RESPONSIVE */
+@media (max-width: 430px) {
+
+    #nav{
+        height: 56px;
+        font-size: 16px;
+    }
+
+    #nav li{
+        width: auto;
+        padding: 0 10px;
+    }
+
+    #nav .center{
+        width: auto;
+        gap: 12px;
+    }
 }

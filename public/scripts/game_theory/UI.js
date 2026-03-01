@@ -142,8 +142,8 @@ function layoutPosition() {
 
         const flip = cosA > 0 ? -1 : 1;
 
-        model.style.transform =
-            `translate(-50%, -50%) translate(${x}px, ${y}px) scaleX(${flip})`;
+        model.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+        model.querySelector("img").style.transform = `scaleX(${flip})`;
 
         model.style.zIndex = Math.floor(y + 1000);
     });
@@ -162,6 +162,11 @@ function addModelToPlayField(type){
     let person = document.createElement("div");
     person.className = "model";
     person.dataset.name = model.name;
+
+    let name = document.createElement("div");
+    name.className = "model-name";
+    name.textContent = stringShortener(model.name, strLim);
+    person.appendChild(name);
 
     let img = document.createElement("img");
     img.src = model.img;
@@ -217,8 +222,8 @@ startGameBtn.addEventListener("click", async () => {
         await runGame(selectedModels, (self, opponent) => {
             drawConnection(self, opponent);
             updateScoreBoard(self);
+        updateScoreBoard(opponent);
         });
-    scoreMap.clear();
 });
 
 //#endregion
@@ -247,8 +252,8 @@ export function pointFloatEffect(modelName, value) {
         }, 120);
     }
 
-    div.style.left = rect.left + rect.width / 2 + "px";
-    div.style.top = rect.top + "px";
+    div.style.left = rect.left + rect.width + "px";
+    div.style.top = rect.top + rect.height / 4 + "px";
 
     document.body.appendChild(div);
 
