@@ -1,0 +1,28 @@
+{
+  "personal_state": {
+        "form": {
+            "ambition": 0.5,
+            "adaptability": 0.5,
+            "self_trust": 0.5,
+            "risk_sensitivity": 0.5,
+            "consistency": 0.5,
+            "openness": 0.5
+        },
+
+        "scale_definition": {
+            "type": "float",
+            "min": -0.5,
+            "max": 0.5,
+            "step": 0.1,
+            "meaning": "Negative decreases the trait, positive increases it"
+        },
+
+        "instruction": [
+            "Do NOT include explanations.",
+            "Do NOT include thoughts.",
+            "Do NOT include markdown.",
+            "Do NOT truncate.",
+            "Analyze ONLY the user's latest input."
+        ]
+    }
+}

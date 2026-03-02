@@ -16,3 +16,12 @@ export function sendNoti(text, ms){
         noti.style.opacity = 0;
     }, ms);
 }
+
+// syntax highlightner for code
+export function syntaxHighlight(str) {
+    return str
+        .replace(/"(.*?)":/g, '<span class="json-key">"$1"</span>:')
+        .replace(/: "(.*?)"/g, ': <span class="json-string">"$1"</span>')
+        .replace(/: (-?\d+(\.\d+)?)/g, ': <span class="json-number">$1</span>')
+        .replace(/\b(true|false|null)\b/g, '<span class="json-boolean">$1</span>');
+}

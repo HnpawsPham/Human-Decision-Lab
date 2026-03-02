@@ -205,6 +205,10 @@ startGameBtn.addEventListener("click", async () => {
         sendNoti("Number of rounds missing!", 2000);
         return;
     }
+    else if(parseInt(roundInput.value) > 100){
+        sendNoti("Max round value exceeded, it will be set to 100", 5000);
+        roundInput.value = "100";
+    }
 
     if(selectedModels.length < 2){
         sendNoti("Don't be a lone wolf! Select at least 2 models to start.", 3500);
