@@ -1,4 +1,3 @@
-import { Analytics } from "@vercel/analytics/next"
 import { sendNoti } from "./support-funcs.js";
 
 // ongoing noti
