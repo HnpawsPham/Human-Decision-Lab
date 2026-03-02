@@ -97,8 +97,7 @@ body::before {
     border-radius: 10px;
     font-family: main;
     align-items: center;
-    display: flex;
-    /* display: none; */
+    display: none;
 }
 
 .attribute span{
