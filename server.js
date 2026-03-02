@@ -1,16 +1,20 @@
 const express = require('express');
 const path = require("path");
 const fs = require("fs");
+import { fileURLToPath } from 'url';
+import path from 'path';
 // const dotenv = require("dotenv").config();
 
 // initial
 const app = express()
 app.use(express.json())
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
-})
+});
 
 // get google studio ai api
 const botConfig = JSON.parse(fs.readFileSync(path.join(__dirname, "bot-instruction.json"), "utf8"));
