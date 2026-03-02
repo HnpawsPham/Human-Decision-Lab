@@ -152,7 +152,6 @@ body::before {
 
 #char-name{
     width: 60vw;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
