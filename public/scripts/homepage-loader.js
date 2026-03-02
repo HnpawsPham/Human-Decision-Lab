@@ -1,7 +1,8 @@
+import { Analytics } from "@vercel/analytics/next"
 import { sendNoti } from "./support-funcs.js";
 
 // ongoing noti
-sendNoti("This website is under development, please use PC or a better experience", 5000);
+sendNoti("This website is under development, please use PC for a better experience", 5000);
 
 // go to profile page
 const userAccountBtn = document.getElementById("user-account");
