@@ -21,10 +21,10 @@ body::before {
 
 #setting{
     position: fixed;
-    top: 10vh;
+    top: 5vh;
     right: 20px;
     width: 40vw;
-    height: 80vh;
+    height: 90vh;
     border: 1px solid var(--light-beige);
     background-color: var(--orange);
     border-radius: 10px;
@@ -45,14 +45,14 @@ body::before {
     width: 90%;
     background-color: var(--light-beige);
     border-radius: 10px;
-    height: 40%;
+    height: 50%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
 }
 
-#setting .info-field input, #setting .info-field textarea, #char-submit-btn{
+#setting .info-field input, #setting .info-field textarea, #setting .info-field button{
     font-family: main;
     font-size: 15px;
     padding: 10px 20px;
@@ -66,19 +66,19 @@ body::before {
 }
 
 #setting .info-field textarea{
-    height: 50%;
+    height: 45%;
 }
 
-#char-submit-btn{
+#setting .info-field button{
     cursor: pointer;
     background-color: var(--red);
-    height: 15%;
+    height: 12%;
     color: white;
 }
 
 #output{
     width: 90%;
-    height: 35%;
+    height: 30%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, auto);
