@@ -3,7 +3,6 @@ const path = require("path");
 const fs = require("fs");
 import { fileURLToPath } from 'url';
 import path from 'path';
-// const dotenv = require("dotenv").config();
 
 // initial
 const app = express()
