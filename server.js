@@ -1,15 +1,17 @@
-const express = require('express');
-const path = require("path");
-const fs = require("fs");
-import { fileURLToPath } from 'url';
+import express from 'express';
+import fs from 'fs';
 import path from 'path';
-
-// initial
-const app = express()
-app.use(express.json())
+import { fileURLToPath } from 'url';
+// const dotenv = require("dotenv").config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// initial
+const app = express();
+
+app.use(express.json())
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
@@ -88,10 +90,10 @@ app.post("/api/personal-state-init", async (req, res) => {
     }
 });
 
-app.use(express.static(path.join(__dirname, "public")));
+
 
 // vercel
-module.exports = app;
+export default app
 
 // run local
 // const PORT = 3000;
