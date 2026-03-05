@@ -36,7 +36,7 @@ charSubmitBtn.addEventListener("click", async () => {
     }
 
     if(!charBackgroundPrompt.value){
-        sendNoti(`Tell us about your character’s background, or choose “Default Setting” to begin.`, 6000);
+        sendNoti(`Tell us about your character’s background, or choose “I'll go with default” to begin.`, 6000);
         return;
     }
 

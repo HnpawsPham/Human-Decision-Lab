@@ -445,10 +445,13 @@ html{
     z-index: 1;
     width: 50%;
     height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #main-game .bottom .init-tab input{
-    width: 70%;
+    width: 60%;
     font-family: main;
     border: 2px solid var(--dark);
     border-radius: 10px;

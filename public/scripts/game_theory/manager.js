@@ -19,7 +19,7 @@ export function changeGameSpeed(value) {
 // RUN GAME SUPPORT FUNCS
 
 // MAIN GAME HANDLE
-export async function runGame(models, onMatch) {
+export async function runGame(skip, models, onMatch) {
     let n = models.length;
     for (let i = 0; i < n - 1; i++) {
         for (let j = i + 1; j < n; j++) {
@@ -29,35 +29,31 @@ export async function runGame(models, onMatch) {
             let modelMove = model.this_move(opponent);
             let opponentMove = opponent.this_move(model);
 
+            let modelDelta = 0, opponentDelta = 0;
             if(modelMove == 1 && opponentMove == 1) {
-                model.point += 2;
-                opponent.point += 2;
-
-                pointFloatEffect(model.name, 2);
-                pointFloatEffect(opponent.name, 2);
+                model.point += (modelDelta = 2);
+                opponent.point += (opponentDelta = 2);
             } 
             else if(modelMove == 0 && opponentMove == 1) {
-                model.point += 3;
-                opponent.point -= 3;
-
-                pointFloatEffect(model.name, 3);
-                pointFloatEffect(opponent.name, -3);
+                model.point += (modelDelta = 3);
+                opponent.point += (opponentDelta = -3);
             } 
             else if(modelMove == 1 && opponentMove == 0) {
-                model.point -= 3;
-                opponent.point += 3;
-
-                pointFloatEffect(model.name, -3);
-                pointFloatEffect(opponent.name, 3);
+                model.point += (modelDelta = -3);
+                opponent.point += (opponentDelta = 3);   
             }
 
-            // update UI
-            onMatch(model, opponent);
+            if(!skip()){
+                pointFloatEffect(model.name, modelDelta);
+                pointFloatEffect(opponent.name, opponentDelta);
+
+                // update UI
+                onMatch(model, opponent);
+                await sleep(gameSpeed);
+            }
 
             model.update();
             opponent.update();
-
-            await sleep(gameSpeed);
         }
     }
 }

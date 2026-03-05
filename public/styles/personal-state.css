@@ -109,7 +109,7 @@ body::before {
     width: 48%;
     position: relative;
     height: 8px;
-    background: #323237;
+    background: #323237d6;
     border-radius: 4px;
     overflow: hidden;
     display: flex;

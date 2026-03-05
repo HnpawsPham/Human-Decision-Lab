@@ -54,7 +54,7 @@ const roundInput = document.getElementById("round-inp");
 const randomRoundBtn = document.getElementById("random-round-btn");
 
 randomRoundBtn.addEventListener("click", () => {
-    roundInput.value = Math.floor(Math.random() * 100) + 1;
+    roundInput.value = Math.floor(Math.random() * maxRound) + 1;
 })
 
 // region open model selection
@@ -150,7 +150,14 @@ function layoutPosition() {
 }
 
 // add models in circle (playground)
+const maxNumOfModels = 30;
+
 function addModelToPlayField(type){
+    if(selectedModels.length > maxNumOfModels){
+        sendNoti("Don't try to add the whole world's population😭😭", 4000);
+        return;
+    }
+
     const model = cloneModel(type);
     selectedModels.push(model);
 
@@ -196,18 +203,27 @@ gameSpeedSlider.addEventListener("change", () => {
     changeGameSpeed(gameSpeedSlider.value);
 })
 
-//#region start game handle
+//#region game handle
 const startGameBtn = document.getElementById("start-game-btn");
+const skipGameBtn = document.getElementById("skip-game-btn");
 let round = 0;
+const maxRound = 30;
+
+// skip game handle
+let skip = false;
+skipGameBtn.addEventListener("click", () => {
+    skip = true;
+    skipGameBtn.disabled = true;
+})
 
 startGameBtn.addEventListener("click", async () => {
     if(roundInput.value == ""){
         sendNoti("Number of rounds missing!", 2000);
         return;
     }
-    else if(parseInt(roundInput.value) > 100){
-        sendNoti("Max round value exceeded, it will be set to 100", 5000);
-        roundInput.value = "100";
+    else if(parseInt(roundInput.value) > maxRound){
+        sendNoti(`Max round value exceeded, it will be set to ${maxRound}`, 5000);
+        roundInput.value = `${maxRound}`;
     }
 
     if(selectedModels.length < 2){
@@ -219,15 +235,29 @@ startGameBtn.addEventListener("click", async () => {
     startGameBtn.disabled = true;
     addModelBtn.disabled = true;
     roundInput.disabled = true;
+    skipGameBtn.disabled = false;
     
     round = roundInput.value;
 
     for(let i = 0; i < round; i++)
-        await runGame(selectedModels, (self, opponent) => {
+        await runGame(() => skip, selectedModels, (self, opponent) => {
             drawConnection(self, opponent);
             updateScoreBoard(self);
-        updateScoreBoard(opponent);
+            updateScoreBoard(opponent);
         });
+
+    if(skip){
+        for(const model of selectedModels)
+            updateScoreBoard(model);
+
+        let n = selectedModels.length;
+        for (let i = 0; i < n - 1; i++) 
+            for (let j = i + 1; j < n; j++){
+                let model = selectedModels[i];
+                let opponent = selectedModels[j];
+                drawConnection(model, opponent);
+            }
+    }
 });
 
 //#endregion
@@ -236,6 +266,8 @@ startGameBtn.addEventListener("click", async () => {
 
 // increase point effect
 export function pointFloatEffect(modelName, value) {
+    if(value == 0) return;
+
     const model = document.querySelector(`.model[data-name="${modelName}"]`);
     if(!model) return;
 
@@ -277,6 +309,7 @@ function drawConnection(self, opponent) {
 
     const svgRect = modelConnections.getBoundingClientRect();
 
+    const frag = document.createDocumentFragment();
     const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
 
     const currentModelPos = currentModel.getBoundingClientRect();
@@ -299,7 +332,8 @@ function drawConnection(self, opponent) {
     line.setAttribute("stroke-width", "3");
     line.style.transition = "stroke 0.3s";
 
-    modelConnections.appendChild(line);
+    frag.appendChild(line);
+    modelConnections.appendChild(frag);
 
     setTimeout(() => {
         line.setAttribute("stroke", "var(--gray)");
@@ -322,6 +356,8 @@ resetBtn.addEventListener("click", () => {
     startGameBtn.disabled = false;
     roundInput.disabled = false;
     addModelBtn.disabled = false;
+    skip = false;
+    skipGameBtn.disabled = true;
     roundInput.value = null;
 
     scoreboardDisplay.replaceChildren();
