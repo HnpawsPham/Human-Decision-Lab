@@ -256,3 +256,19 @@ a{
         gap: 12px;
     }
 }
+
+.json-key{
+    color: #9cdcfe;
+}
+
+.json-string{
+    color: #ce9178;
+}
+
+.json-number{
+    color: #b5cea8;
+}
+
+.json-boolean{
+    color: #569cd6;
+}

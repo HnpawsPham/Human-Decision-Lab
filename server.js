@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 // const dotenv = require("dotenv").config();
 
+//#region INITIAL
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -16,8 +17,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+//#endregion
 
-// get google studio ai api
+// #region get google studio ai api
 const botConfig = JSON.parse(fs.readFileSync(path.join(__dirname, "bot-instruction.json"), "utf8"));
 const model = "gemini-2.5-flash";
 
@@ -90,8 +92,20 @@ app.post("/api/personal-state-init", async (req, res) => {
     }
 });
 
+// test 
+// app.post("/api/personal-state-init", async (req, res) => {
+//     res.json({reply: `{
+//                 "ambition": 0.1,
+//                 "adaptability": 0.3,
+//                 "self_trust": 0.5,
+//                 "risk_sensitivity": -0.2,
+//                 "consistency": 1,
+//                 "openness": 0.6}`
+//             })
+// })
+//#endregion
 
-
+//#region HOSTING
 // vercel
 export default app
 
@@ -100,3 +114,4 @@ export default app
 // app.listen(PORT, () => {
 //   console.log('Server running on port: ', PORT)
 // })
+//#endregion

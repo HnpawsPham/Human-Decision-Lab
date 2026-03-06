@@ -15,11 +15,11 @@ body::before {
     z-index: -1;
 }
 
-#home{
+#home {
     filter: invert(1);
 }
 
-#setting{
+#setting {
     position: fixed;
     top: 5vh;
     right: 20px;
@@ -34,14 +34,14 @@ body::before {
     align-items: center;
 }
 
-#setting h1{
+#setting h1 {
     font-size: 40px;
     color: var(--light-beige);
     text-decoration: underline;
     text-shadow: 3px 4px 0px var(--dark);
 }
 
-#setting .info-field{
+#setting .info-field {
     width: 90%;
     background-color: var(--light-beige);
     border-radius: 10px;
@@ -52,7 +52,9 @@ body::before {
     align-items: center;
 }
 
-#setting .info-field input, #setting .info-field textarea, #setting .info-field button{
+#setting .info-field input,
+#setting .info-field textarea,
+#setting .info-field button {
     font-family: main;
     font-size: 15px;
     padding: 10px 20px;
@@ -61,99 +63,126 @@ body::before {
     border: 1px solid var(--dark);
 }
 
-#setting .info-field input{
+#setting .info-field input {
     height: 15%;
 }
 
-#setting .info-field textarea{
+#setting .info-field textarea {
     height: 45%;
 }
 
-#setting .info-field button{
+#setting .info-field button {
     cursor: pointer;
     background-color: var(--red);
     height: 12%;
     color: white;
 }
 
-#output{
+#output {
     width: 90%;
     height: 30%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, auto);
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     background-image: url(../assets/cross-lines.png);
     background-size: cover;
     border: 3px solid var(--dark);
     border-radius: 10px;
+    padding: 10px;
 }
 
-#output .attribute{
-    width: 94%;
-    background-color: var(--light-beige);
-    padding: 10px 0;
-    border-radius: 10px;
-    font-family: main;
+#AI_output{
+    white-space: pre;
+    width: 100%;
+    margin: 0;
+    color: var(--light-beige);
+}
+
+#play-field {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    display: none;
 }
 
-.attribute span{
-    width: 48%;
-    text-align: center;
-}
-
-.bar {
-    width: 48%;
+#character {
     position: relative;
-    height: 8px;
-    background: #323237d6;
-    border-radius: 4px;
-    overflow: hidden;
+    width: 30vw;
+    height: 50vh;
     display: flex;
-    justify-content: center;
-}
-
-.inside {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    transition: all 0.3s;
-}
-
-.inside.left {
-    right: 50%;
-    background: var(--blue);
-    border: 1px solid var(--dark);
-    border-radius: 40px 0 0 40px;
-    width: 0;
-}
-
-.inside.right {
-    left: 50%;
-    border-radius: 40px;
-    background: var(--blue);
-    border: 1px solid var(--dark);
-    border-radius: 0 40px 40px 0;
-    width: 0;
-}
-
-.mid {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 5px;
-    height: 100%;
-    background: var(--blue);
-    transform: translateX(-50%);
-}
-
-#char-name{
-    width: 60vw;
-    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#attr-circle {
+    display: none;
+    position: absolute;
+    inset: 0;
+}
+
+.attribute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 132, 255, 0.322);
+    padding: 10px 0;
+    font-family: main;
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.attribute span {
+    z-index: 2;
+    width: 80%;
+    text-align: center;
+    line-break: auto;
     color: white;
+}
+
+.attribute .liquid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0 0 100px 100px;
+    background-color: rgb(63, 110, 179);
+}
+
+.attribute .liquid svg{
+    position: absolute;
+    top: -12px;
+    left: 0;
+    width: 200%;
+    height: 40px;
+    animation: waveMove 4s infinite;
+}
+
+@keyframes waveMove{
+    from{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(-70%);
+    }
+}
+
+#char-name {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    color: white;
+}
+
+#character img {
+    width: 150px;
 }

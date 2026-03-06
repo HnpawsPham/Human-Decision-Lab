@@ -18,7 +18,9 @@ export function sendNoti(text, ms){
 }
 
 // syntax highlightner for code
-export function syntaxHighlight(str) {
+export function syntaxHighlight(obj) {
+    const str = JSON.stringify(obj, null, 4)
+
     return str
         .replace(/"(.*?)":/g, '<span class="json-key">"$1"</span>:')
         .replace(/: "(.*?)"/g, ': <span class="json-string">"$1"</span>')

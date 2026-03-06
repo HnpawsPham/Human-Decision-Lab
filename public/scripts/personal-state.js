@@ -1,5 +1,28 @@
+
 import {sendNoti, syntaxHighlight} from "./support-funcs.js";
 
+// UI: make attributes circle
+const attrCircle = document.getElementById("attr-circle");
+const attrs = document.querySelectorAll(".attribute")
+
+function layoutAttributes(){
+    const rect = attrCircle.getBoundingClientRect()
+    const radius = Math.min(rect.width, rect.height) / 2;
+    const step = (Math.PI * 2) / attrs.length;
+
+    attrs.forEach((el, i) => {
+        const angle = i * step - Math.PI / 2;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+
+        el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`
+    })
+}
+
+layoutAttributes()
+window.addEventListener("resize", layoutAttributes)
+
+// AI output handle
 const output = document.getElementById("output");
 const AI_output = output.querySelector("#output pre");
 
@@ -12,20 +35,8 @@ const charBackgroundPrompt = document.getElementById("char-background-prompt");
 
 function loadAttributeBar(name, value) {
     const attr = document.getElementById(name);
-    attr.style.display = "flex";
-
-    const left = attr.querySelector(".inside.left");
-    const right = attr.querySelector(".inside.right");
-
     const percent = Math.abs(value) * 100;
-
-    left.style.width = "0%";
-    right.style.width = "0%";
-
-    if(value > 0) 
-        right.style.width = percent + "%";
-    else if (value < 0) 
-        left.style.width = percent + "%";
+    attr.querySelector(".liquid").style.height = `${percent}%`;
 }
 
 charSubmitBtn.addEventListener("click", async () => {
@@ -50,7 +61,6 @@ charSubmitBtn.addEventListener("click", async () => {
     });
 
     const data = await res.json();
-    console.log(typeof data.reply, data.reply);
 
     if(data.reply === null){
         sendNoti("The server is overload, please try again after a while", 5000);
@@ -58,11 +68,18 @@ charSubmitBtn.addEventListener("click", async () => {
     }
     const attributes = JSON.parse(data.reply);
 
+    // show attribute bubbles
+    attrCircle.style.display = "block";
+
     Object.entries(attributes).forEach(([key, value]) => {
         loadAttributeBar(key, value);
     });
+    layoutAttributes();
 
+    // output attributes to Character Setting tab
     output.style.backgroundImage = "none";
+    output.style.backgroundColor = "var(--dark)";
+    AI_output.innerHTML = syntaxHighlight(attributes);
 
     charName.innerHTML = charNameInp.value;
 })
